@@ -1,4 +1,3 @@
-﻿using BepInEx.Logging;
 using HarmonyLib;
 using Isto.GTW.Player;
 using System.Runtime.CompilerServices;
@@ -11,7 +10,6 @@ namespace GrabCounter.Patches
     [HarmonyPatch(typeof(PlayerController))]
     internal class GrabCounterPatch
     {
-        internal static ManualLogSource Logger;
         [HarmonyPrefix]
         [HarmonyPatch("ActivateGrabLink")]
         static void PlayerController_OnActivateGrabPrefix(ref PlayerController __instance, ref bool __state)

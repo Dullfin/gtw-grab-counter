@@ -1,18 +1,17 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace GrabCounter
 {
-    [BepInPlugin("com.Dullfin.FPSLimiter", "FPS Limiter", "1.0")]
+    [BepInPlugin("com.Dullfin.GrabCounter", "GrabCounter", "1.0")]
     public class GrabCounter : BaseUnityPlugin
     {
         internal static new ManualLogSource Logger;
-        private readonly Harmony harmony = new Harmony("com.Dullfin.FPSLimiter");
+        private readonly Harmony harmony = new Harmony("com.Dullfin.GrabCounter");
 
         private void Awake()
         {
@@ -21,15 +20,16 @@ namespace GrabCounter
             SceneManager.sceneLoaded += OnSceneLoaded;
 
             harmony.PatchAll();
-            Logger.LogInfo($"FPS Limiter Plugin has been loaded.");
+            Logger.LogInfo("Plugin com.Dullfin.GrabCounter has been loaded.");
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            if (scene.name == "TitleScreen")
+            Logger.LogInfo($"Scene {scene} has been loaded.");
+            if (scene.name == "PlayerEssentials")
             {
                 // Locate the UI-Gameplay object
-                var uiGameplay = GameObject.Find("UI-Menu_Settings/c_Settings/c_SettingsSubMenu/c_controls/scrollView/viewport/content");
+                var uiGameplay = GameObject.Find("UI-ControlElementDisplay");
                 Logger.LogInfo($"uiGameplay {uiGameplay} has been loaded.");
                 var newLocalPos = new Vector3(0, 0, 0);
                 GameObject grabCounterTextObj;
