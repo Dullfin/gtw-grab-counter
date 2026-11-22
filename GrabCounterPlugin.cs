@@ -20,16 +20,20 @@ namespace GrabCounter
             SceneManager.sceneLoaded += OnSceneLoaded;
 
             harmony.PatchAll();
-            Logger.LogInfo("Plugin com.Dullfin.GrabCounter has been loaded.");
+            Logger.LogInfo("Grab Counter Plugin has been loaded.");
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            Logger.LogInfo($"Scene {scene} has been loaded.");
-            if (scene.name == "PlayerEssentials")
+            if (scene.name == "PlayerEssentials" || scene.name == "PlayerEssentialsDoinklerSpecial")
             {
-                // Locate the UI-Gameplay object
-                var uiGameplay = GameObject.Find("UI-ControlElementDisplay");
+                // Locate the control element display that holds the grab prompt
+                var uiGameplay = GameObject.Find("UI-ControlElementDisplay(Grab)");
+                if (uiGameplay == null)
+                {
+                    Logger.LogWarning("Could not find UI-ControlElementDisplay(Grab); grab counter not created.");
+                    return;
+                }
                 Logger.LogInfo($"uiGameplay {uiGameplay} has been loaded.");
                 var newLocalPos = new Vector3(0, 0, 0);
                 GameObject grabCounterTextObj;
